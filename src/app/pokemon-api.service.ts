@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap, map, filter } from 'rxjs/operators'
+import { Observable , from, of } from 'rxjs';
+import { tap, map, filter, flatMap, merge, mergeAll } from 'rxjs/operators'
 
 export interface ListResult<T> {
   count: number;
@@ -14,6 +14,13 @@ export interface PokemonBasic {
   name: string;
   url: string;
 }
+export interface PokemonSprites {
+  front_default: string;
+}
+export interface PokemonDetail {
+  name: string;
+  sprites: PokemonSprites;
+}
 
 
 @Injectable({
@@ -21,40 +28,70 @@ export interface PokemonBasic {
 })
 export class PokemonApiService {
 
-  _cache : { [key:string] : any };
-  
 
   constructor(private _client: HttpClient) { 
-    this._cache = {};
   }
   
   setCache(url: string, value: any) {
-    this._cache[url] = value;
+    localStorage.setItem(url, JSON.stringify(value));
   }
 
-  getCached<T>(url: string) : Observable<T> {
-    if (url in this._cache) {
+  clone<T>(obj: T) : T {
+    return <T>Object.assign({}, obj);
+  }
+
+  get<T>(url: string) : Observable<T> {
+    if (localStorage.getItem(url)) {
       console.log("Cache already has" , url);
-      return Observable.create( <T>this._cache[url] );
+      return of( this.clone(<T>JSON.parse(localStorage.getItem(url))) );
     }
 
     console.log("Requesting that pokemon!" , url);
     // get the value and cache
-    return this._client.get<T>("https://pokeapi.co/api/v2/" + url).pipe(
-      tap( (val) => this.setCache(url, val) ) );
-  }
-  
-  getAllPokemon() {
-    return this.getCached<ListResult<PokemonBasic>>("pokemon/?limit=2000");
+    return this._client.get<T>(url).pipe(
+      tap( (val) => { try {
+      this.setCache(url, val) } catch (err) {}} ) );
   }
 
-  searchPokemon(name: string) {
+  
+  getAllPokemon() {
+    return this.get<ListResult<PokemonBasic>>("https://pokeapi.co/api/v2/pokemon/?limit=2000").pipe(map((result) => 
+        {
+          result.results = result.results.sort((a, b) => a.name.localeCompare(b.name)) 
+          return result;
+        }));
+  }
+
+  searchPokemon(name: string) : Observable<ListResult<PokemonBasic>> {
     return this.getAllPokemon()
-      .pipe( map((pokemonList) =>
-          pokemonList.results.filter(
-            (pokemon) => pokemon.name.toLowerCase().indexOf(name.toLowerCase()) != -1
-          )
-      )
+      .pipe( map((pl) => {
+            pl.results = pl.results.filter(
+              (pokemon) => pokemon.name.toLowerCase().indexOf(name.toLowerCase()) >= 0
+            )
+            return pl;
+          }
+        )
+      );
+  }
+
+  getPokemonDetails(pokemons: PokemonBasic[]) : Observable<PokemonDetail> {
+    return of(pokemons)
+      .pipe(
+        flatMap(
+          (pb) => pb.map((p) => this.get<PokemonDetail>(p.url))
+        ),
+        mergeAll()
+      );
+  }
+
+  getPokemonDetailsPage(search: string, start: number, size: number) : Observable<PokemonDetail> {
+    let pokemon = search ? this.searchPokemon(search) : this.getAllPokemon();
+    return pokemon.pipe(
+      flatMap((r) => { 
+        let pageItems = r.results.slice(start, Math.min(start + size - 1, r.results.length - 1));
+        console.log(start, size, pageItems);
+        return this.getPokemonDetails(pageItems);
+      })
     );
   }
 

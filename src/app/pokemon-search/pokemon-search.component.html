@@ -1,6 +1,31 @@
 
-<div>
-  <div *ngFor="let pokemon of this.pokemonList">
-    <span>{{pokemon.name}}</span>
+<div class="layout">
+    <div class="layout-header">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <input [(ngModel)]="this.search" placeholder="search for a pokemon" class="search-input" >
+          <mat-icon>search</mat-icon>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+    <mat-nav-list [style.background]="'white'" class="layout-detail">
+      <a mat-list-item *ngFor="let pokemon of this.pokemonDetails" [routerLink]="['pokemon', pokemon.name]">
+          <img src="{{pokemon.imageUrl}}" width="60px">
+          <span [style.padding-left.px]='20'>{{pokemon.name}}</span>
+        </a>
+    </mat-nav-list>
+    <mat-toolbar>
+      <mat-toolbar-row class="centered">
+        <div class="centered">
+        <div class="space"></div>
+        <button mat-icon-button (click)="this.lastPage()">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="this.nextPage()">
+          <mat-icon>keyboard_arrow_right </mat-icon>
+        </button>
+        <div class="space"></div>
+      </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
   </div>
-</div>
