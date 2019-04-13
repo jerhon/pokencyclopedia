@@ -15,12 +15,14 @@ import { FormsModule } from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
 
 
-import {ScrollDispatchModule} from '@angular/cdk/scrolling'; 
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonSearchComponent
+    PokemonSearchComponent,
+    PokemonDetailsComponent
   ],
   imports: [
     BrowserModule,

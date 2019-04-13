@@ -84,6 +84,10 @@ export class PokemonApiService {
       );
   }
 
+  getPokemonDetailsByName(name:string) : Observable<PokemonDetail> {
+    return this._client.get<PokemonDetail>("https://pokeapi.co/api/v2/pokemon/" + name);
+  }
+
   getPokemonDetailsPage(search: string, start: number, size: number) : Observable<PokemonDetail> {
     let pokemon = search ? this.searchPokemon(search) : this.getAllPokemon();
     return pokemon.pipe(
