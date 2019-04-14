@@ -8,21 +8,26 @@ import { PokemonSearchComponent } from './pokemon-search/pokemon-search.componen
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule} from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import {CovalentVirtualScrollModule} from '@covalent/core/virtual-scroll';
 import { FormsModule } from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
 
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
-import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component'; 
+import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
+import { PokemonNamePipe } from './pokemon-name.pipe'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonSearchComponent,
-    PokemonDetailsComponent
+    PokemonDetailsComponent,
+    PokemonNamePipe
   ],
   imports: [
     BrowserModule,
@@ -36,6 +41,8 @@ import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.compo
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    MatButtonToggleModule,
+    MatCardModule,
 
     ScrollDispatchModule,
 

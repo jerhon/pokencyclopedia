@@ -4,8 +4,9 @@ import { PokemonSearchComponent } from './pokemon-search/pokemon-search.componen
 import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
 
 const routes: Routes = [
-  { path:"", component: PokemonSearchComponent },
-  { path: "pokemon/:name", component: PokemonDetailsComponent}
+  { path: '', redirectTo: 'pokemon', pathMatch: 'full'},
+  { path: "pokemon", component: PokemonSearchComponent, pathMatch: 'full',  data: {search: true} },
+  { path: "pokemon/:name", component: PokemonDetailsComponent, data: { search: false }}
 
 ];
 

@@ -2,8 +2,22 @@
     display: flex;
     flex-direction: row;
     vertical-align: middle;
+    height: 100px;
 
-    h3 {
-        display: inline-block;
+    align-items: center;
+
+
+    .fill {
+        flex: 1 1 auto;
     }
+
+
+    img {
+        height: 100px;
+        margin: 10px;
+    }
+}
+
+.main {
+    padding: 8px;
 }

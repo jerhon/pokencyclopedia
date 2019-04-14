@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable , from, of } from 'rxjs';
-import { tap, map, filter, flatMap, merge, mergeAll } from 'rxjs/operators'
+import { tap, map, filter, flatMap, merge, mergeAll, toArray } from 'rxjs/operators'
 
 export interface ListResult<T> {
   count: number;
@@ -74,13 +74,14 @@ export class PokemonApiService {
       );
   }
 
-  getPokemonDetails(pokemons: PokemonBasic[]) : Observable<PokemonDetail> {
+  getPokemonDetails(pokemons: PokemonBasic[]) : Observable<PokemonDetail[]> {
     return of(pokemons)
       .pipe(
         flatMap(
           (pb) => pb.map((p) => this.get<PokemonDetail>(p.url))
         ),
-        mergeAll()
+        mergeAll(),
+        toArray()
       );
   }
 
@@ -88,7 +89,7 @@ export class PokemonApiService {
     return this._client.get<PokemonDetail>("https://pokeapi.co/api/v2/pokemon/" + name);
   }
 
-  getPokemonDetailsPage(search: string, start: number, size: number) : Observable<PokemonDetail> {
+  getPokemonDetailsPage(search: string, start: number, size: number) : Observable<PokemonDetail[]> {
     let pokemon = search ? this.searchPokemon(search) : this.getAllPokemon();
     return pokemon.pipe(
       flatMap((r) => { 

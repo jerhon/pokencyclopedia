@@ -5,6 +5,11 @@
         <mat-toolbar-row>
             <button mat-icon-button (click)="sidebar.toggle()"><mat-icon>menu</mat-icon></button>
             <span>Pokedex</span>
+            <span class="fill"></span>
+            <button mat-icon-button (click)="this.toggleSearch()"><mat-icon>search</mat-icon></button>
+        </mat-toolbar-row>
+        <mat-toolbar-row [@expansion]="this.searchVisible ? 'open' : 'closed'">
+            <input [(ngModel)]="this.search" placeholder="find a pokemon" class="search-input" >
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container class="nav-container">

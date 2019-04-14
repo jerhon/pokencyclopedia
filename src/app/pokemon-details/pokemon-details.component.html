@@ -1,4 +1,23 @@
-<div>
-  <span>{{this.pokemonDetails.name}}</span>
+
+<div class="main">
+
+<div class="header">
+  <ng-container *ngIf="this.pokemonDetails">
+  <a mat-icon-button [routerLink]='["/pokemon"]'><mat-icon>arrow_back</mat-icon></a>    
+    <span class="fill"></span>
+    <h3>
+      {{this.pokemonDetails.name | pokemonName}}
+    </h3>
+    <span class="fill"></span>
+    
+  </ng-container>
+</div>
+
+<div class="header">
+  <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
+  <span class="fill"></span>  
   <img [src]="this.pokemonDetails.sprites.front_default" >
+  <span class="fill"></span>
+  <button mat-icon-button><mat-icon>arrow_forward</mat-icon></button>  
+</div>
 </div>
