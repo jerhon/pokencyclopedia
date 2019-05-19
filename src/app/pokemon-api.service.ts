@@ -20,8 +20,16 @@ export interface PokemonSprites {
 export interface PokemonDetail {
   name: string;
   sprites: PokemonSprites;
+
+  moves: { move : PokemonMove  }[]
+}
+export interface PokemonActionBasic {
+
 }
 
+export interface PokemonMove {
+  name :string;
+}
 
 @Injectable({
   providedIn: 'root'

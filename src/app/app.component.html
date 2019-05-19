@@ -13,8 +13,10 @@
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container class="nav-container">
-        <mat-sidenav #sidebar mode="over">
-            Content
+        <mat-sidenav #sidebar mode="over" [style.width.px]="250">
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="['/']" (click)="sidebar.close()">Pokemon</a>
+            </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
             <router-outlet></router-outlet>

@@ -1,23 +1,31 @@
+<div *ngIf="this.pokemonDetails">
 
-<div class="main">
-
-<div class="header">
-  <ng-container *ngIf="this.pokemonDetails">
-  <a mat-icon-button [routerLink]='["/pokemon"]'><mat-icon>arrow_back</mat-icon></a>    
-    <span class="fill"></span>
-    <h3>
+  <mat-toolbar>
+    <img [src]="this.pokemonDetails.sprites.front_default" width="64px" height="64px">
+    <h3 [style.padding-left.px]="16">
       {{this.pokemonDetails.name | pokemonName}}
     </h3>
-    <span class="fill"></span>
-    
-  </ng-container>
-</div>
+  </mat-toolbar>
 
-<div class="header">
-  <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
-  <span class="fill"></span>  
-  <img [src]="this.pokemonDetails.sprites.front_default" >
-  <span class="fill"></span>
-  <button mat-icon-button><mat-icon>arrow_forward</mat-icon></button>  
-</div>
+  <div class="main">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Moves</mat-card-title>
+        <mat-icon>information</mat-icon>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div style="padding: 16px">
+          Moves are actions that pokemon can take.  Most often they are used in battles.  However, some can be used in special circumstances such as clearing obstacles.
+        </div>
+        <mat-divider></mat-divider>
+        <div class="wrap-list">
+          <div *ngFor="let move of this.moves">
+            {{move}}
+          </div>
+        </div>
+      </mat-card-content>
+
+    </mat-card>
+  </div>
 </div>

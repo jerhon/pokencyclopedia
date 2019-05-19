@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonApiService, PokemonBasic, PokemonDetail } from "../pokemon-api.service"
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../search.service';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 export interface PokeListItem {
   name: string;
@@ -27,8 +28,11 @@ export class PokemonSearchComponent implements OnInit {
   }
 
   ngOnInit() {    
-    this._searchService.getSearch().subscribe((search) => {
-      this.refresh();
+    this._searchService
+      .onSearch()
+      .pipe(debounceTime(200))
+      .subscribe((search) => {
+        this.refresh();
     });
 
     this._searchService.enableSearch();

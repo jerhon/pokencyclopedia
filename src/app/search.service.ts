@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,17 @@ export class SearchService {
     this.search = new BehaviorSubject<string>('');
   }
 
-  getSearch() : Observable<string> {
+  onSearch() : Observable<string> {
     return this.search;
   }
-
   getCurrentSearch() : string {
     return this.currentSearch;
   }
-
   submitSearch(search : string) {
     this.currentSearch = search;
     this.search.next(search);
   }
-
+  
 
   enableSearch() {
     this.searchEnabled = true;

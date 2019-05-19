@@ -21,3 +21,17 @@
 .main {
     padding: 8px;
 }
+
+.wrap-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: center;
+
+    div {
+        text-align: center;
+        min-width: 100px;
+        min-height: 20px;
+        padding: 6px;
+    }
+}

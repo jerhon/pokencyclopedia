@@ -20,7 +20,11 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
-import { PokemonNamePipe } from './pokemon-name.pipe'; 
+import { PokemonNamePipe } from './pokemon-name.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'; 
+
+import {CovalentLoadingModule} from '@covalent/core/loading'
 
 @NgModule({
   declarations: [
@@ -44,9 +48,13 @@ import { PokemonNamePipe } from './pokemon-name.pipe';
     MatButtonToggleModule,
     MatCardModule,
 
+    CovalentLoadingModule,
+
     ScrollDispatchModule,
 
-    CovalentVirtualScrollModule
+    CovalentVirtualScrollModule,
+
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
