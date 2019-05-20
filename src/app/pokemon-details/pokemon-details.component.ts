@@ -13,20 +13,17 @@ export class PokemonDetailsComponent implements OnInit {
   pokemonDetails : PokemonDetail;
   moves: string[];
 
-  constructor(private route:ActivatedRoute, 
-    private pokemonApi: PokemonApiService, 
-    private searchService : SearchService) {
+  constructor(private route:ActivatedRoute) {
+    this.setPokemonDetails(route.snapshot.data.pokemonDetails);
   }
 
   ngOnInit() {
-    console.log('route: ', this.route.snapshot.params);
+    
+  }
 
-    this.pokemonApi
-      .getPokemonDetailsByName(this.route.snapshot.paramMap.get('name'))
-      .subscribe((pd) => { 
-        this.pokemonDetails = pd; 
-        this.moves = this.pokemonDetails.moves.map((m) => m.move.name ).sort();
-      });
+  setPokemonDetails(details : PokemonDetail) {
+    this.pokemonDetails = details;
+    this.moves = details.moves.map((m) => m.move.name).sort();
   }
 
 }

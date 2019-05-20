@@ -25,6 +25,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment'; 
 
 import {CovalentLoadingModule} from '@covalent/core/loading'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {CovalentLoadingModule} from '@covalent/core/loading'
     MatListModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatProgressSpinnerModule,
 
     CovalentLoadingModule,
 

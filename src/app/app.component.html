@@ -18,7 +18,10 @@
                 <a mat-list-item [routerLink]="['/']" (click)="sidebar.close()">Pokemon</a>
             </mat-nav-list>
         </mat-sidenav>
-        <mat-sidenav-content>
+        <mat-sidenav-content >
+            <div *ngIf="this.navigating" id="overlay">
+                <mat-spinner></mat-spinner>
+            </div>
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
