@@ -35,3 +35,22 @@
         padding: 6px;
     }
 }
+
+.bar {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.headline {
+    display: flex;
+    flex-direction: row;
+
+    mat-card {
+        flex: 1 1 auto;
+    }
+}
+
+mat-card {
+    margin: 6px;
+}

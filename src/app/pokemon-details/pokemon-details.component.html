@@ -1,30 +1,45 @@
-<div *ngIf="this.pokemonDetails">
-
-  <mat-toolbar>
-    <img [src]="this.pokemonDetails.sprites.front_default" width="64px" height="64px">
-    <h3 [style.padding-left.px]="16">
-      {{this.pokemonDetails.name | pokemonName}}
-    </h3>
-  </mat-toolbar>
-
-  <div class="main">
+<div class="main">
+  <div class="headline">
+    <mat-card>
+      <h3 [style.padding-left.px]="16">
+        {{this.pokemonDetails.name | pokemonName}}
+      </h3>
+      <img [src]="this.pokemonDetails.sprites.front_default">
+    </mat-card>
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Moves</mat-card-title>
+        <mat-card-title>Stats</mat-card-title>
       </mat-card-header>
-      
       <mat-card-content>
-        <div style="padding: 16px">
-          Moves are actions that pokemon can take.  Most often they are used in battles.  However, some can be used in special circumstances such as clearing obstacles.
-        </div>
-        <mat-divider></mat-divider>
-        <div class="wrap-list">
-          <div *ngFor="let move of this.moves">
-            {{move}}
+        <div *ngFor="let stat of this.pokemonDetails.stats" class="bar">
+          <div [style.width]="100 * (stat.base_stat / 255) + '%'" [style.margin.px]="5" [style.background]="'red'">
+
+          </div>
+          <div>
+            <span>{{stat.stat.name}} - {{stat.base_stat}}</span>
           </div>
         </div>
       </mat-card-content>
-
     </mat-card>
   </div>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Moves</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div style="padding: 16px">
+        Moves are actions that pokemon can take. Most often they are used in battles. However, some can be used in
+        special circumstances such as clearing obstacles.
+      </div>
+      <mat-divider></mat-divider>
+      <div class="wrap-list">
+        <div *ngFor="let move of this.moves">
+          {{move}}
+        </div>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
 </div>

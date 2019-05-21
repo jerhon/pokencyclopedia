@@ -10,6 +10,11 @@ export interface ListResult<T> {
   results: T[];
 }
 
+export interface NamedApiResource {
+  name: string;
+  url: string;
+}
+
 export interface PokemonBasic {
   name: string;
   url: string;
@@ -17,9 +22,15 @@ export interface PokemonBasic {
 export interface PokemonSprites {
   front_default: string;
 }
+export interface PokemonStats {
+  stat: NamedApiResource;
+  base_stat: number;
+  effort: number;
+}
 export interface PokemonDetail {
   name: string;
   sprites: PokemonSprites;
+  stats: PokemonStats[];
 
   moves: { move : PokemonMove  }[]
 }
