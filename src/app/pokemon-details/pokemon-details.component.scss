@@ -27,10 +27,12 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-self: center;
+    align-content: center;
+    align-items: center;
+    padding: 16px;
 
     div {
         text-align: center;
-        min-width: 100px;
         min-height: 20px;
         padding: 6px;
     }
@@ -45,6 +47,7 @@
 .headline {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 
     mat-card {
         flex: 1 1 auto;
@@ -53,4 +56,17 @@
 
 mat-card {
     margin: 6px;
+}
+
+.stats {
+    padding-left: 16px;
+
+    th {
+        text-align: right;
+        padding-right: 16px;
+    }
+}
+
+.flex-nogrow {
+    flex: 0 0 auto;
 }

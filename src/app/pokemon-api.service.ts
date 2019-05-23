@@ -27,12 +27,33 @@ export interface PokemonStats {
   base_stat: number;
   effort: number;
 }
+export interface PokemonType {
+  slot: number;
+  type: NamedApiResource;
+}
+export interface PokemonAbility {
+  is_hidden:boolean;
+  slot: number;
+  ability: NamedApiResource;
+}
 export interface PokemonDetail {
   name: string;
-  sprites: PokemonSprites;
-  stats: PokemonStats[];
+  base_experience: number;
+  height: number;
+  is_default: boolean;
+  order: number;
+  weight: number;
 
-  moves: { move : PokemonMove  }[]
+  abilities: PokemonAbility[];
+  forms: NamedApiResource[];
+  //game_indices
+  //held_items
+  //location_area_encounters
+  moves: PokemonMove[];
+  sprites: PokemonSprites;
+  species: NamedApiResource;
+  stats: PokemonStats[];
+  types: PokemonType[];
 }
 export interface PokemonActionBasic {
 

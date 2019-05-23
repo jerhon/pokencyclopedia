@@ -1,12 +1,42 @@
 <div class="main">
   <div class="headline">
     <mat-card>
-      <h3 [style.padding-left.px]="16">
+      <h2>
         {{this.pokemonDetails.name | pokemonName}}
-      </h3>
-      <img [src]="this.pokemonDetails.sprites.front_default">
+      </h2>
+      <div class="headline">
+        <div>
+          
+          <img [src]="this.pokemonDetails.sprites.front_default">
+          <span *ngIf="this.pokemonDetails.name != this.pokemonDetails.species.name">({{this.pokemonDetails.species.name}})</span>
+        </div>
+        <div>
+          <table class="stats">
+            <tr *ngIf="this.pokemonDetails.species.name != this.pokemonDetails.name">
+              <th>Species</th>
+              <td>{{this.pokemonDetails.species.name}}</td>
+            </tr>
+            <tr>
+              <th>Height</th>
+              <td>{{this.pokemonDetails.height}} decimetres</td>
+            </tr>
+            <tr>
+              <th>Weight</th>
+              <td>{{this.pokemonDetails.weight}} hectograms</td>
+            </tr>
+            <tr>
+              <th>Base Experience</th>
+              <td>{{this.pokemonDetails.base_experience}}</td>
+            </tr>
+            <tr *ngIf="this.pokemonDetails.forms.length > 1 || (this.pokemonDetails.forms.length == 1 && this.pokemonDetails.forms[0].name != this.pokemonDetails.name)">
+              <th>Forms</th>
+              <td><span *ngFor="let pkmnForm of this.pokemonDetails.forms">{{pkmnForm.name}}</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>  
     </mat-card>
-    <mat-card>
+    <mat-card class="flex-nogrow">
       <mat-card-header>
         <mat-card-title>Stats</mat-card-title>
       </mat-card-header>
