@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonApiService, PokemonBasic, PokemonDetail } from "../pokemon-api.service"
 import { ActivatedRoute, Router } from '@angular/router';
-import { SearchService } from '../search.service';
+import { SearchService } from '../../search.service';
 import { debounce, debounceTime } from 'rxjs/operators';
 
 export interface PokeListItem {

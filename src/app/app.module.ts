@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule} from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
@@ -19,20 +18,16 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
-import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
-import { PokemonNamePipe } from './pokemon-name.pipe';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment'; 
 
 import {CovalentLoadingModule} from '@covalent/core/loading'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { PokemonModule } from './pokemon/pokemon.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonSearchComponent,
-    PokemonDetailsComponent,
-    PokemonNamePipe
   ],
   imports: [
     BrowserModule,
@@ -55,6 +50,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ScrollDispatchModule,
 
     CovalentVirtualScrollModule,
+
+    PokemonModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonApiService, PokemonDetail } from '../pokemon-api.service';
+import { PokemonDetail } from '../pokemon-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -23,7 +22,7 @@ export class PokemonDetailsComponent implements OnInit {
 
   setPokemonDetails(details : PokemonDetail) {
     this.pokemonDetails = details;
-    this.moves = details.moves.map((m) => m.move.name).sort();
+    this.moves = details.moves.map((m) => m.name).sort();
   }
 
 }
