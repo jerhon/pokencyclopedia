@@ -60,7 +60,7 @@ export interface PokemonActionBasic {
 }
 
 export interface PokemonMove {
-  name :string;
+  move: NamedApiResource;
 }
 
 @Injectable({
@@ -82,11 +82,9 @@ export class PokemonApiService {
 
   get<T>(url: string) : Observable<T> {
     if (localStorage.getItem(url)) {
-      console.log("Cache already has" , url);
       return of( this.clone(<T>JSON.parse(localStorage.getItem(url))) );
     }
 
-    console.log("Requesting that pokemon!" , url);
     // get the value and cache
     return this._client.get<T>(url).pipe(
       tap( (val) => { try {
@@ -133,7 +131,7 @@ export class PokemonApiService {
     let pokemon = search ? this.searchPokemon(search) : this.getAllPokemon();
     return pokemon.pipe(
       flatMap((r) => { 
-        let pageItems = r.results.slice(start, Math.min(start + size - 1, r.results.length - 1));
+        let pageItems = r.results.slice(start, Math.min(start + size , r.results.length));
         console.log(start, size, pageItems);
         return this.getPokemonDetails(pageItems);
       })

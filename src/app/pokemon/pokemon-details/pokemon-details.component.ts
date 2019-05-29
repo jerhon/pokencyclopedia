@@ -22,7 +22,7 @@ export class PokemonDetailsComponent implements OnInit {
 
   setPokemonDetails(details : PokemonDetail) {
     this.pokemonDetails = details;
-    this.moves = details.moves.map((m) => m.name).sort();
+    this.moves = details.moves.map((m) => m.move.name).sort();
   }
 
 }

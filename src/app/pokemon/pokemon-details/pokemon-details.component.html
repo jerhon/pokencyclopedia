@@ -6,8 +6,6 @@
       </h2>
       <div>
         <img [src]="this.pokemonDetails.sprites.front_default">
-        <span
-          *ngIf="this.pokemonDetails.name != this.pokemonDetails.species.name">({{this.pokemonDetails.species.name}})</span>
       </div>
     </mat-card>
     <mat-card class="flex-nogrow">
@@ -66,8 +64,8 @@
       </div>
       <mat-divider></mat-divider>
       <div class="wrap-list">
-        <div *ngFor="let move of this.moves">
-          {{move}}
+        <div *ngFor="let move of this.pokemonDetails.moves">
+          {{move.move.name}}
         </div>
       </div>
     </mat-card-content>

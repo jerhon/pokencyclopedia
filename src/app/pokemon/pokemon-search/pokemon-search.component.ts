@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonApiService, PokemonBasic, PokemonDetail } from "../pokemon-api.service"
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { SearchService } from '../../search.service';
 import { debounce, debounceTime } from 'rxjs/operators';
+import { PokemonSearchParams } from './pokemon-search.resolver';
+import { query } from '@angular/animations';
 
 export interface PokeListItem {
   name: string;
@@ -14,52 +16,50 @@ export interface PokeListItem {
   templateUrl: './pokemon-search.component.html',
   styleUrls: ['./pokemon-search.component.scss']
 })
-export class PokemonSearchComponent implements OnInit {
+export class PokemonSearchComponent {
 
-  pokemonDetails: PokeListItem[];
-  lastIdx: number;
-  pageSize: number;
-  lastSearch: string;
-  
-  constructor(private _api: PokemonApiService, private _searchService : SearchService, private _router : Router, private _activatedRouter : ActivatedRoute ) {
-    this.pokemonDetails = [];
-    this.lastIdx = 0;
-    this.pageSize = 10;
-  }
+  pokemonList: PokeListItem[];
 
-  ngOnInit() {    
-    this._searchService
-      .onSearch()
-      .pipe(debounceTime(200))
-      .subscribe((search) => {
-        this.refresh();
+  query: PokemonSearchParams;
+  readonly pageSize : number = 20;
+
+  constructor(private _activatedRouter : ActivatedRoute, private _router : Router ) {
+    _activatedRouter.data.subscribe((d ) => {
+      this.pokemonList = d.pokemonList;
     });
-
-    this._searchService.enableSearch();
-  }
-
-  refresh() {
-    this.pokemonDetails = [];
-    this._api.getPokemonDetailsPage(this._searchService.currentSearch, this.lastIdx, this.pageSize)
-      .subscribe((r) => { 
-        this.pokemonDetails = r.map((i) => ({ 
-          name: i.name, 
-          imageUrl: i.sprites.front_default
-        }));
-      });
+    _activatedRouter.queryParams.subscribe((d : PokemonSearchParams) => {
+      this.query = { 
+        offset: d.offset ? +d.offset : 0,
+        count: d.count ? +d.count : 20,
+        search: d.search
+      };
+    });
   }
 
   nextPage() {
-    this.lastIdx += this.pageSize;
-    this.refresh();
+    var nextParams = {... this.query};
+    if (this.pokemonList.length >= this.pageSize) {
+      nextParams.offset = +nextParams.offset + this.pokemonList.length;
+    }
+    this.navigatePage(nextParams);
   }
 
   lastPage() {
-    this.lastIdx-=this.pageSize;
-    if (this.lastIdx < 0) {
-      this.lastIdx = 0;
+    var nextParams = {... this.query};
+    nextParams.offset -= +this.query.count;
+    if (nextParams.offset < 0) {
+      nextParams.offset = 0;
     }
-    this.refresh();
+    this.navigatePage(nextParams);
+  }
+
+  navigatePage(params : PokemonSearchParams) {
+    if (params.offset == 0) {
+      delete params.offset;
+      delete params.count;
+    }   
+
+    this._router.navigate([], { queryParams: params });
   }
 
 }
