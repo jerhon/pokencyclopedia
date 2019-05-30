@@ -1,6 +1,6 @@
 <div class="main">
   <div class="headline">
-    <mat-card class="flex-nogrow">
+    <mat-card class="flex-nogrow center-content">
       <h2>
         {{this.pokemonDetails.name | pokemonName}}
       </h2>
@@ -9,7 +9,11 @@
       </div>
     </mat-card>
     <mat-card class="flex-nogrow">
+      <mat-card-header>
+        <mat-card-title>Basic Information</mat-card-title>
+      </mat-card-header>
       <div>
+        
         <table class="stats">
           <tr *ngIf="this.pokemonDetails.species.name != this.pokemonDetails.name">
             <th>Species</th>
