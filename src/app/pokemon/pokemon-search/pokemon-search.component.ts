@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonApiService, PokemonBasic, PokemonDetail } from "../pokemon-api.service"
+import { PokemonDetail } from "../pokemon-api.service"
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { SearchService } from '../../search.service';
-import { debounce, debounceTime } from 'rxjs/operators';
 import { PokemonSearchParams } from './pokemon-search.resolver';
-import { query } from '@angular/animations';
 
 export interface PokeListItem {
   name: string;
@@ -18,14 +15,17 @@ export interface PokeListItem {
 })
 export class PokemonSearchComponent {
 
-  pokemonList: PokeListItem[];
+  pokemonList: PokeListItem[] = [];
 
   query: PokemonSearchParams;
   readonly pageSize : number = 20;
 
   constructor(private _activatedRouter : ActivatedRoute, private _router : Router ) {
     _activatedRouter.data.subscribe((d ) => {
-      this.pokemonList = d.pokemonList;
+      this.pokemonList = (d.pokemonList as PokemonDetail[]).map((pd) => ({
+        name: pd.name,
+        imageUrl: pd.sprites.front_default
+      }));
     });
     _activatedRouter.queryParams.subscribe((d : PokemonSearchParams) => {
       this.query = { 

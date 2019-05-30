@@ -21,13 +21,12 @@ export class PokemonSearchResolver implements Resolve<PokemonDetail[]> {
     readonly pageSize : number = 20;
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<PokemonDetail[]> {
-        var {search, offset, count} = route.queryParams;
+        var { search, offset, count} = route.queryParams;
         console.log("RESOLVER: pokemon list", search, offset, count);
 
-        search = search ? +search : "";
         offset = offset ? +offset : 0;
         count = count ? +count : this.pageSize;
         
-        return this._pokemonService.getPokemonDetailsPage(search, offset, count);
+        return this._pokemonService.getPokemonDetailsPage(search.replace(' ', '-'), offset, count);
     }
 }

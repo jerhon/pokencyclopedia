@@ -3,13 +3,17 @@
 <div class="layout">
     <mat-toolbar>
         <mat-toolbar-row>
-            <button mat-icon-button (click)="sidebar.toggle()"><mat-icon>menu</mat-icon></button>
+            <button mat-icon-button (click)="sidebar.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
             <span>Pokedex</span>
             <span class="fill"></span>
-            <button mat-icon-button (click)="this.toggleSearch()"><mat-icon>search</mat-icon></button>
+            <button mat-icon-button (click)="this.toggleSearch()">
+                <mat-icon>search</mat-icon>
+            </button>
         </mat-toolbar-row>
         <mat-toolbar-row [@expansion]="this.searchVisible ? 'open' : 'closed'">
-            <input [(ngModel)]="this.search" placeholder="find a pokemon" class="search-input" >
+            <input (keyup)="onSearch($event.target.value)" placeholder="find a pokemon" class="search-input">
         </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container class="nav-container">
@@ -18,7 +22,7 @@
                 <a mat-list-item [routerLink]="['/', 'pokemon']" (click)="sidebar.close()">Pokemon</a>
             </mat-nav-list>
         </mat-sidenav>
-        <mat-sidenav-content >
+        <mat-sidenav-content>
             <div *ngIf="this.navigating" id="overlay">
                 <mat-spinner></mat-spinner>
             </div>
