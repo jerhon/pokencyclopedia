@@ -26,7 +26,11 @@ export class PokemonSearchResolver implements Resolve<PokemonDetail[]> {
 
         offset = offset ? +offset : 0;
         count = count ? +count : this.pageSize;
+
+        if (search) {
+            search = search.replace(' ', '-');
+        }
         
-        return this._pokemonService.getPokemonDetailsPage(search.replace(' ', '-'), offset, count);
+        return this._pokemonService.getPokemonDetailsPage(search, offset, count);
     }
 }
