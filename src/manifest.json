@@ -1,6 +1,6 @@
 {
-  "name": "honlsoft-pokedex",
-  "short_name": "honlsoft-pokedex",
+  "name": "pokencyclopedia",
+  "short_name": "pokencyclopedia",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
